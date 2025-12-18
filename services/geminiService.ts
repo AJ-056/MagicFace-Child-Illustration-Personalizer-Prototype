@@ -14,7 +14,9 @@ function parseDataUrl(dataUrl: string) {
 }
 
 export async function personalizeIllustration(userPhotoBase64: string, baseIllustrationInput: string): Promise<string> {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // Use casting to satisfy tsc during the build phase; Vite will handle the actual replacement
+  const apiKey = (process.env as any).API_KEY;
+  const ai = new GoogleGenAI({ apiKey });
   
   // 1. Process Identity Photo
   const userPhotoParsed = parseDataUrl(userPhotoBase64);
@@ -76,7 +78,8 @@ export async function personalizeIllustration(userPhotoBase64: string, baseIllus
       }
     });
 
-    const imagePart = result.candidates?.[0]?.content?.parts.find(p => p.inlineData);
+    // Use optional chaining for the find method to satisfy TS
+    const imagePart = result.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
     
     if (imagePart && imagePart.inlineData) {
       return `data:image/png;base64,${imagePart.inlineData.data}`;
