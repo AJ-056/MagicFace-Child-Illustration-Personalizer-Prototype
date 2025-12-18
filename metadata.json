@@ -1,0 +1,7 @@
+{
+  "name": "MagicFace: Child Illustration Personalizer",
+  "description": "A prototype that uses Gemini 2.5 Flash Image to personalize a 3D-styled child illustration with a user-uploaded photo, maintaining the artistic style and identity.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
